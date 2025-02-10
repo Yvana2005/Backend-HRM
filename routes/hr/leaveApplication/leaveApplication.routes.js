@@ -6,6 +6,8 @@ const {
   getSingleLeave,
   grantedLeave,
   getLeaveByUserId,
+  updateLeave,
+  deleteSingleleaveApplication,
 } = require("./leaveApplication.controller");
 const authorize = require("../../../utils/authorize"); // authentication middleware
 
@@ -24,5 +26,11 @@ leaveApplicationRoutes.get(
   authorize(""),
   getLeaveByUserId
 );
+leaveApplicationRoutes.put(
+  "/:id",
+  authorize("update-leaveApplication"),
+  updateLeave
+);
+leaveApplicationRoutes.delete("/:id", authorize(""), deleteSingleleaveApplication); // deleteUser only
 
 module.exports = leaveApplicationRoutes;

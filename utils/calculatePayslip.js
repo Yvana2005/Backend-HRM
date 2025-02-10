@@ -79,7 +79,7 @@ const calculatePayslip = async (salaryMonth, salaryYear) => {
   allEmployeeSalary.forEach((item) => {
     item.salaryPayable = parseFloat(item.salary.toFixed(2));
     item.totalPayable = parseFloat(
-      (item.salaryPayable + item.bonus - item.deduction).toFixed(2)
+      (item.salary + item.bonus - item.deduction).toFixed(2)
     );
   });
 

@@ -32,7 +32,7 @@ const generatePayslip = async (req, res) => {
           bonusComment: item.bonusComment,
           deduction: item.deduction,
           deductionComment: item.deductionComment,
-          totalPayable: item.totalPayable + item.bonus - item.deduction,
+          totalPayable: item.totalPayable,
         };
       }),
       skipDuplicates: true,
@@ -44,7 +44,7 @@ const generatePayslip = async (req, res) => {
     return res.status(400).json({ message: error.message });
   }
 };
-
+// + item.bonus - item.deduction
 const getAllPayslip = async (req, res) => {
   if (req.query.value === "monthWise") {
     const { paymentStatus, salaryMonth, salaryYear } = req.query;
@@ -176,7 +176,7 @@ const makePayment = async (req, res) => {
         related_id: updatedPayslip.id,
       },
     });
-
+    //updatedPayslip.
     return res.status(200).json({ updatedPayslip, transaction });
   } catch (error) {
     console.log(error.message);

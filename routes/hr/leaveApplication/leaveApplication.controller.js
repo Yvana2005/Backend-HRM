@@ -293,10 +293,51 @@ const getLeaveByUserId = async (req, res) => {
     return res.status(400).json({ message: error.message });
   }
 };
+
+const updateLeave = async (req, res) => {
+  try {
+    const leaveFrom = new Date(req.body.leaveFrom);
+    const leaveTo = new Date(req.body.leaveTo);
+    
+    const updateLeave = await prisma.leaveApplication.update({
+      where: {
+        id: Number(req.params.id),
+      },
+      data: {
+        leaveType: req.body.leaveType ? req.body.leaveType : undefined,
+        leaveFrom: leaveFrom ? leaveFrom : undefined,
+        leaveTo: leaveTo ? leaveTo : undefined,
+        reason: req.body.reason ? req.body.reason : undefined,
+        status: req.body.status,
+      },
+    });
+    return res.status(200).json(updateLeave);
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+};
+const deleteSingleleaveApplication = async (req, res) => {
+  // const id = parseInt(req.params.id);
+  // only allow admins to delete other user records
+  
+  try {
+   const deletedSingleleaveApplication = await prisma.leaveApplication.delete({
+      where: {
+        id: Number(req.params.id),
+      },
+    });
+    res.status(200).json(deletedSingleleaveApplication);
+  } catch (error) {
+    res.status(400).json(error.message);
+    console.log(error.message);
+  }
+};
 module.exports = {
   createSingleLeave,
   getAllLeave,
   getSingleLeave,
   grantedLeave,
   getLeaveByUserId,
+  updateLeave,
+  deleteSingleleaveApplication,
 };
