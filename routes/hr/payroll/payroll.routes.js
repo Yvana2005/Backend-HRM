@@ -7,6 +7,7 @@ const {
   getSinglePayslip,
   updatePayslip,
   makePayment,
+  deletePayslip,
 } = require("./payroll.controller");
 const authorize = require("../../../utils/authorize"); // authentication middleware
 
@@ -18,4 +19,6 @@ payrollRoutes.get("/all", authorize("readAll-payroll"), getAllPayslip);
 payrollRoutes.get("/:id", authorize("readSingle-payroll"), getSinglePayslip);
 payrollRoutes.put("/:id", authorize("update-payroll"), updatePayslip);
 payrollRoutes.put("/payment/:id", authorize("update-payroll"), makePayment);
+payrollRoutes.delete("/:id", authorize("delete-payroll"), deletePayslip); 
+
 module.exports = payrollRoutes;

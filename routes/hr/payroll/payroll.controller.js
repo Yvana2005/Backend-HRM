@@ -184,6 +184,23 @@ const makePayment = async (req, res) => {
   }
 };
 
+const deletePayslip = async (req, res) => {
+ 
+  
+  try {
+    const deletedPayslip = await prisma.payslip.delete({
+      where: {
+        id: parseInt(req.params.id)
+      },
+      
+    });
+    // await produceUserEvent('delete', deleteUser);
+    return res.status(200).json({ message: "User deleted successfully" }, deletedPayslip);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   calculatePayroll,
   generatePayslip,
@@ -191,4 +208,5 @@ module.exports = {
   getSinglePayslip,
   updatePayslip,
   makePayment,
+  deletePayslip
 };
